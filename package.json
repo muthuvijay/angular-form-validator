@@ -1,0 +1,28 @@
+{
+  "name": "angular-form-validator",
+  "version": "1.0.0",
+  "description": "An Angular directive that helps developers to focus more on business rather UI validation",
+  "main": "mv-form-validator.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/muthuvijay/angular-form-validator.git"
+  },
+  "keywords": [
+    "AngularJS",
+    "directive",
+    "form",
+    "validation"
+  ],
+  "author": "Muthu Vijayan <muthuvijay@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/muthuvijay/angular-form-validator/issues"
+  },
+  "homepage": "https://github.com/muthuvijay/angular-form-validator#readme",
+  "dependencies": {
+    "angular": "^1.6.1"
+  }
+}
