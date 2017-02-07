@@ -1,12 +1,24 @@
 <!doctype html>
-<html>
-    <head></head>
+<html ng-app="form-validator-example">
+    <head>
+        <style>
+            .validate-error{
+                border: 1px solid #f00;
+            }
+        </style>
+    </head>
     <body>
         <h1>Angular Form validator</h1>
 
-        <div ng-app="form-validator-example">
-            <form mv-form-validator>
-                <input type="text" name="testName" validate="required" />
+        <div ng-controller="exampleController" >
+            <form name="loginForm" mv-form-validator callback="obj.saveCallback" config="obj.configs">
+                <label class="form-control">Username :</label>
+                <input type="text" name="testName" validate="required" class="form-control" />
+
+                <label class="form-control">Password :</label>
+                <input type="password" name="testName" validate="required" class="form-control" />
+
+                <button class="btn btn-sm btn-primary trigger-validate">Login</button>
             </form>
 
         </div>

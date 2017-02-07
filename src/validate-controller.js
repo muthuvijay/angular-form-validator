@@ -1,26 +1,21 @@
 (function(angular){
 
 angular.module('form-validator-controller',[])
-.controller('ValidateController',['$scope','ValidationRules','ValidateService','Messages',ValidateController]);
+.controller('ValidateController',['$scope','ValidationRules','Messages',ValidateController]);
 
-function ValidateController ($scope, ValidationRules, ValidateService, Messages) {
+function ValidateController ($scope, ValidationRules, Messages) {
     var self = this;
         self.ValidationRules = ValidationRules;
-        self.ValidateService = ValidateService;
         self.Messages = Messages;
         self.$elements = [];
-        self.validateError = 'mv-validate-error';
 
     self.setElement = function($elem){
         self.$elements.push($elem);
     }
 
-    self.triggercallback = function(){
-        return $scope.setupValidate(true);
+    self.isVisible = function (e) {
+        return !!( e.offsetWidth || e.offsetHeight || e.getClientRects().length );
     }
-
-        //Set the callback
-    self.ValidateService.setMethod(self.triggercallback);
 
 }
 
@@ -80,7 +75,7 @@ ValidateController.prototype = {
         }
     },
 
-    setupValidate : function (isManualTriggered){
+    setupValidate : function (){
         
             var self =this,
                 errStatus = true,
@@ -90,7 +85,7 @@ ValidateController.prototype = {
 
                     for(var i=0,len=self.$elements.length; i< len;i++){
 
-                        if(!$(self.$elements[i].elem).is(':visible')) //skip element not visible on DOM
+                        if(!self.isVisible(self.$elements[i].elem[0])) //skip element not visible on DOM
                             continue;
 
                         self.validate(self.$elements[i]);
@@ -98,19 +93,19 @@ ValidateController.prototype = {
                         if(self.$elements[i].status == false){
                             errStatus = false;
                             //Avoid Duplicate Messages
-                            if(_.indexOf(msg,self.$elements[i].msg) == -1)
-                                msg.push($elements[i].msg);
+                            if(msg.indexOf(self.$elements[i].msg) === -1)
+                                msg.push(self.$elements[i].msg);
                         }
                     }
                     
                     var obj = {
                         status : errStatus,
                         msg : msg,
-                        form : form,
-                        action : $action
+                        form : self.form,
+                        action : self.$action
                     }
                     
-                    if(!isManualTriggered)
+                    if(!!self.callback)
                         self.callback.call(this,obj);
                     else    
                         return obj;

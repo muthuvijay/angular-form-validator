@@ -10,7 +10,7 @@ angular.module('form-validator-factory',[])
             var $elem = elemObj.elem,
                 $val = getValue(elemObj);
             
-            if(_.isUndefined($val) || _.isEmpty($val) || !$val){
+            if(isUndefined($val) || isEmpty($val) || !$val){
                 return false;
             }
             
@@ -134,6 +134,16 @@ angular.module('form-validator-factory',[])
         return !isNaN(value) && isFinite(value);
     }
     
+    //check if undefined
+    function isUndefined(value){
+        return !!(value === undefined);
+    }
+
+    //check if empty
+    function isEmpty(value){
+        return !!(value === ' ');
+    }
+
     return ValidationRules;
 
 }])

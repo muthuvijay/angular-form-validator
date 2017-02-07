@@ -13,15 +13,19 @@ angular.module('form-validator-directive',[])
     
     //link function
     function linkFn($scope,$elem,$attr,ctrl){
-        var $action = null;
-        var form = (!!$attr.form) ? $attr.form : null; 
+
+        var clazz = ($scope.config && $scope.config.trigger)?$scope.config.trigger:'trigger-validate'; 
+
+        ctrl.$action = null; //action identifier
+        ctrl.form = $attr.name || null; //Form identifier 
+        ctrl.validateError = ($scope.config && $scope.config.validateError)?$scope.config.validateError:'validate-error';
         
-        $elem.on('change',function(e){
+        $elem.on('click',function(e){
             e.stopPropagation();
             var $target = angular.element(e.target);
             
-            if($target.hasClass('mv-trigger-validate')){
-                $action = $target.attr('data-action') || null; //define followup action to be triggered
+            if($target.hasClass(clazz)){
+                ctrl.$action = $target.attr('data-action') || null; //define followup action to be triggered
                 
                 ctrl.setupValidate();
             }
@@ -32,6 +36,7 @@ angular.module('form-validator-directive',[])
     return{
         restrict : 'AE',
         scope : {
+            config : '=',
             callback : '='
         },
         link : linkFn,
